@@ -1,33 +1,48 @@
- import { useState } from "react";
+ import { useState,useEffect } from "react";
 import MovieCard from "../Components/MovieCard";
+import { searchMovies ,getPopularMovies} from "../Services/Api";
+import '../CSS/Home.css';
 
  function Home(){
 
-    const [searchQuery,setSearchQuery]=useState("")
+    const [searchQuery,setSearchQuery]=useState("");
+    const [movies,setMovies]=useState([]);
+    const[error,setError]=useState(null);
+    const[loading,setLoading]=useState(true)
 
-    const movies=[
-        {id:1,title:"John Wick",release_Date:"2020"},
-        {id:2,title:"Matrix",release_Date:"2004"},
-        {id:3,title:"Terminator",release_Date:"2003"},
-        {id:4,title:"Avatar",release_Date:"2024"},
-    ];
+    useEffect(()=>{
+        const loadPopularMovies=async ()=> {
+            try{
+                const popularMovies=await getPopularMovies()
+                setMovies(popularMovies)
+            }catch(err){
+                console.log(err)
+                setError("Failed to load Movies ... ")
+            }
+            finally{
+                setLoading(false)
+            }
+            
+        }
+        loadPopularMovies()
+    },[])
 
     const handleSearch=(e)=>{
         e.preventDefault()
         alert(searchQuery)
-        setSearchQuery("------")
+        // setSearchQuery("------")
     };
         
     return(
         <div className="home">
-            <form onSubmit={handleSearch} className="search0form" >
+            <form onSubmit={handleSearch} className="search-form" >
                 <input type="text" 
                 placeholder="search for movies ... "
                 className="search-input"
                 value={searchQuery}
                 onChange={(e)=>setSearchQuery(e.target.value)}
                 />
-            <button type="submit">Submit</button>
+            <button type="submit" className="search-button">Submit</button>
             </form>
 
             <div className="movies-grid">
@@ -40,4 +55,4 @@ import MovieCard from "../Components/MovieCard";
     );
  }
 
- export default Home
+ export default Home;
