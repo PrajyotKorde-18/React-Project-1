@@ -12,8 +12,10 @@ import MovieCard from "../Components/MovieCard";
         {id:4,title:"Avatar",release_Date:"2024"},
     ];
 
-    const handleSearch=()=>{
+    const handleSearch=(e)=>{
+        e.preventDefault()
         alert(searchQuery)
+        setSearchQuery("------")
     };
         
     return(
