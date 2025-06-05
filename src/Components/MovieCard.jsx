@@ -22,4 +22,4 @@ function movieCard({movie}) {
     );
 }
 
-export default movieCard
+export default movieCard;
