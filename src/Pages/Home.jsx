@@ -45,14 +45,17 @@ import '../CSS/Home.css';
             <button type="submit" className="search-button">Submit</button>
             </form>
 
-            <div className="movies-grid">
+        {loading ? (
+            <div className="loading">Loading ... </div>
+         ) :(
+             <div className="movies-grid">
                 {movies.map((movie)=>(
                     <MovieCard movie={movie} key={movie.id}/>                 
                 ))}
-
-            </div>
-        </div>
-    );
- }
+            </div> 
+    )}
+    </div>
+    )
+};
 
  export default Home;
