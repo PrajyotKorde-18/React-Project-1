@@ -27,10 +27,29 @@ import '../CSS/Home.css';
         loadPopularMovies()
     },[])
 
-    const handleSearch=(e)=>{
+    const handleSearch=async(e)=>{
         e.preventDefault()
-        alert(searchQuery)
-        // setSearchQuery("------")
+       if(!searchQuery.trim()) return
+        if (loading)return
+
+       setLoading(true)
+        try{
+
+            const searchResults= await searchMovies(searchQuery)
+            setMovies(searchResults)
+            setError(null)
+
+        } catch(err){
+
+            console.log(e);
+            setError("failed to load movies ")
+            
+
+        }finally {
+            setLoading(false)
+    }
+        
+        setSearchQuery("")
     };
         
     return(
@@ -44,6 +63,8 @@ import '../CSS/Home.css';
                 />
             <button type="submit" className="search-button">Submit</button>
             </form>
+
+            (error && <div className="error-message">{error}</div>)
 
         {loading ? (
             <div className="loading">Loading ... </div>
