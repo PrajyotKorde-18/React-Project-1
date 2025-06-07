@@ -64,7 +64,7 @@ import '../CSS/Home.css';
             <button type="submit" className="search-button">Submit</button>
             </form>
 
-            (error && <div className="error-message">{error}</div>)
+            {error && <div className="error-message">{error}</div>}
 
         {loading ? (
             <div className="loading">Loading ... </div>
@@ -76,7 +76,7 @@ import '../CSS/Home.css';
             </div> 
     )}
     </div>
-    )
-};
+    );
+}
 
  export default Home;

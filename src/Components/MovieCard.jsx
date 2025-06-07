@@ -1,9 +1,20 @@
 import "../CSS/MovieCard.css";
+import { useMovieContext } from "../Contexts/MovieContext";
+import { useNavigate } from "react-router-dom";
 
 function MovieCard({movie}) {
 
-    function OnFavoriteClick() {
-        alert("clicked")
+    const { isFavorites, addToFavorites, removeFromFavorites } = useMovieContext();
+    const favorite=isFavorites(movie.id)
+     const navigate = useNavigate();
+
+    function OnFavoriteClick(e) {
+        e.preventDefault();
+        if (favorite) removeFromFavorites(movie.id);
+            else {
+                addToFavorites(movie);
+                navigate("/favorites");
+            }
         
     }
     
@@ -12,7 +23,7 @@ function MovieCard({movie}) {
             <div className="movie-poster">
                 <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
                 <div className="movie-overlay">
-                    <button className="favorite-btn" onClick={OnFavoriteClick}>
+                    <button className={`favorite-btn ${favorite?"active":""}`} onClick={OnFavoriteClick}>
                         😻
                     </button>
                 </div>  
@@ -23,6 +34,6 @@ function MovieCard({movie}) {
                 </div>
         </div>
     );
-}
+};
 
 export default MovieCard;
